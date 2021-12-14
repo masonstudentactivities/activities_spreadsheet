@@ -24,6 +24,7 @@ const FORM_ROW_START = 3;
 //This constant refers to the number of form questions. Set this to the number of text-filled columns in the "Form Responses" sheet
 const NUM_OUTPUTS = 7;
 
+
 /* -- DATABASE SHEET CONSTANTS -- */
 //This constant refers to the first row of the database that does not contain header information
 const DB_ROW_START = 2;
@@ -32,6 +33,8 @@ const DB_ROW_START = 2;
 const CLUB_NAME_COLUMN = 1; //The name of club's are in the 1st column of the moderation sheet
 const APPROVAL_COLUMN = 6; //The approval dropdown is in the 6th column of the moderation sheet
 const DELETION_COLUMN = 7; //The deletion checkbox is in the 7th column of the moderation sheet
+const DATA_COL = 8;
+
 //This constant refers to the first row of the moderation dashboard that does not contain header information
 const MOD_ROW_START = 3;
 const MOD_NAME_COLUMN = 1;

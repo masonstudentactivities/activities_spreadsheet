@@ -7,25 +7,8 @@
   * Check if it is in the deletion column
     * Prompt the moderator if they truly want to delete the club, and then delete the club.
 */
-function destroyClub(clubName,moderationRow){
+function destroyClub(moderationRow){
   moderation.deleteRow(moderationRow);
-  let row = DB_ROW_START;
-  let col = NAME_COLUMN + 1; //Here you can add 1 to the name column, because the database sidebar is one cell wide
-  let cellVal = "value";
-  let cellBelowVal = "value";
-  while(cellVal != '' || cellBelowVal != ''){
-    cellVal = db.getRange(row,col).getValue();
-    cellBelowVal = db.getRange(row+1,col).getValue();
-    //console.log("cells value: " + cellVal);
-    //console.log("clubs name: " +clubName);
-    if(clubName === cellVal || clubName === cellBelowVal){
-      db.deleteRow(row).deleteRow(row);
-      console.log("Club with name " + clubName + " destroyed successfully.");
-      return
-    }
-    row += 2;
-  }
-  throw "Failed to destroy club with name: " + clubName;
 }
 function whenEdit(e) {
   console.log(JSON.stringify(e));
@@ -43,7 +26,7 @@ function whenEdit(e) {
       if(response.toLowerCase() === "yes" && clubName === as.getRange(clubNameRow,CLUB_NAME_COLUMN).getValue()){
         //The second part of the above condition ensures that you can't delete a club that has
         //already been deleted.
-        destroyClub(clubName,clubNameRow);
+        destroyClub(clubNameRow);
         githubAPI("Delete club with name " + clubName);
       } else{
         cell.setValue(false);
