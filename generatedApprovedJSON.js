@@ -9,9 +9,11 @@ function generatedApprovedJSON() {
   let sitesJSON = [];
   let modRowLoc = MOD_ROW_START;
   while(moderation.getRange(modRowLoc,1).getValue() !== ""){
+    dbJSON = getDatabaseJSON(modRowLoc);
+    if(dbJSON.approved !== undefined){
+      sitesJSON.push(dbJSON.approved);
+    }
     modRowLoc += 1;
-    sitesJSON.push(getDatabaseJSON(modRowLoc));
   }
-  //console.log(sitesJSON)
   return sitesJSON;
 }

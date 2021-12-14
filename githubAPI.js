@@ -16,7 +16,7 @@ Does not do *anything* to handle errors.
 @param {string} email - Committer email
 @returns {string} URL of new commit
 */
-GithubClient.prototype.commit = function(content, filename, email,msg,imgBlob) {
+GithubClient.prototype.commit = function(content, filename, email,msg) {
   // Get the head of the main branch
   // See http://developer.github.com/v3/git/refs/
   var branch = this.makeRequest("get", "refs/heads/main");
@@ -34,11 +34,6 @@ GithubClient.prototype.commit = function(content, filename, email,msg,imgBlob) {
                                          tree: [{path: filename,
                                                 content: content,
                                                 mode: "100644"
-                                               },
-                                               {
-                                                 path:"image.png",
-                                                 content:imgBlob,
-                                                 mode: "100644",
                                                }
   ]})
   }
@@ -95,10 +90,8 @@ GithubClient.prototype.makeRequest = function(method, resource, data) {
 function githubAPI(msg){
   let client = new GithubClient(GIT_USER,REPO_NAME,GIT_USER)
   console.log("Committing to Github with message: " + msg);
-  console.log(DriveApp.getFileById("1xsUEqeaknO7yptaT1BxV3c3tPtjAKkyi").getBlob().getDataAsString());
-  let imgBlob = DriveApp.getFileById("1xsUEqeaknO7yptaT1BxV3c3tPtjAKkyi").getBlob().getDataAsString();
   try{
-    console.log(client.commit(JSON.stringify(generatedApprovedJSON()),"pages.json",EMAIL,msg,imgBlob));
+    console.log(client.commit(JSON.stringify(generatedApprovedJSON()),"pages.json",EMAIL,msg));
   } catch(e){
     throw "Github client failed with error: " + e;
   }
