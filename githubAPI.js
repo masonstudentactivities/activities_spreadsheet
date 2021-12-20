@@ -25,17 +25,45 @@ GithubClient.prototype.commit = function(content, filename, email,msg) {
   // Get the last commit
   // See http://developer.github.com/v3/git/commits/
   var lastCommit = this.makeRequest("get", "commits/" + lastCommitSha);
+  console.log(JSON.stringify(lastCommit));
   var lastTreeSha = lastCommit['tree']['sha'];
   // Create tree object (also implicitly creates a blob based on content)
   // See http://developer.github.com/v3/git/trees/
   try{
+    console.log()
+  //generatedApprovedJSON()
+  let spreadsheetCommitTree = [
+    {path: filename,
+      content: content,
+      mode: "100644"
+     }
+  ];
+  let clubsObject = generatedApprovedJSON();
+  for(let i = 0;i<clubsObject.length;i++){
+    //clubsObject[i].thumbnail;
+    //clubsObject[i].name;
+    let fileID = clubsObject[i].thumbURL.split("?id=")[1];
+    let imageFile = DriveApp.getFileById(fileID);
+    let imageBlob = imageFile.getBlob();
+    let fileExtension = imageBlob.getContentType().split("/")[1]; //Convert image/png into png
+    console.log(fileExtension);
+    let base64Image = Utilities.base64Encode(imageBlob.getBytes());
+    let fileName = clubsObject[i].name + "." + fileExtension;
+    let gitAPIData = UrlFetchApp.fetch("https://api.github.com/repos/masonstudentactivities/masonstudentactivities/contents/thumbnails/" + fileName);
+    
+    spreadsheetCommitTree.push({
+      "path": "thumbnails/" + fileName,
+      "content": base64Image,
+      "mode": "100644",
+      "type": "blob",
+      "sha": gitAPIData.sha
+    });
+  }
+
+
   var newContentTree = this.makeRequest("post", "trees",
                                          {base_tree: lastTreeSha,
-                                         tree: [{path: filename,
-                                                content: content,
-                                                mode: "100644"
-                                               }
-  ]})
+                                         tree: spreadsheetCommitTree})
   }
   catch(e){
     console.log(e)
