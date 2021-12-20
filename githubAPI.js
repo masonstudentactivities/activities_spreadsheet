@@ -21,6 +21,7 @@ GithubClient.prototype.commit = function(content, filename, email,msg) {
   // See http://developer.github.com/v3/git/refs/
   var branch = this.makeRequest("get", "refs/heads/main");
   var lastCommitSha = branch['object']['sha'];
+  console.log(lastCommitSha);
   
   // Get the last commit
   // See http://developer.github.com/v3/git/commits/
@@ -48,16 +49,25 @@ GithubClient.prototype.commit = function(content, filename, email,msg) {
     let fileExtension = imageBlob.getContentType().split("/")[1]; //Convert image/png into png
     console.log(fileExtension);
     let base64Image = Utilities.base64Encode(imageBlob.getBytes());
-    let fileName = clubsObject[i].name + "." + fileExtension;
-    let gitAPIData = UrlFetchApp.fetch("https://api.github.com/repos/masonstudentactivities/masonstudentactivities/contents/thumbnails/" + fileName);
-    
-    spreadsheetCommitTree.push({
-      "path": "thumbnails/" + fileName,
+
+    let gitBlob = this.makeRequest("post","blobs",{
       "content": base64Image,
+      "encoding": "base64"
+    });
+    console.log(gitBlob);
+    let fileName = clubsObject[i].name + "." + fileExtension;
+    //let gitAPIData = UrlFetchApp.fetch("https://api.github.com/repos/masonstudentactivities/masonstudentactivities.github.io/contents/thumbnails/" + fileName);
+    
+    let commitObj = {
+      "path": "thumbnails/" + fileName,
       "mode": "100644",
       "type": "blob",
-      "sha": gitAPIData.sha
-    });
+      "sha":gitBlob.sha
+    }
+    //if(gitAPIData){
+    //  commitObj.sha = gitAPIData.sha;
+    //}
+    spreadsheetCommitTree.push(commitObj);
   }
 
 
@@ -118,10 +128,6 @@ GithubClient.prototype.makeRequest = function(method, resource, data) {
 function githubAPI(msg){
   let client = new GithubClient(GIT_USER,REPO_NAME,GIT_USER)
   console.log("Committing to Github with message: " + msg);
-  try{
-    console.log(client.commit(JSON.stringify(generatedApprovedJSON()),"pages.json",EMAIL,msg));
-  } catch(e){
-    throw "Github client failed with error: " + e;
-  }
+  console.log(client.commit(JSON.stringify(generatedApprovedJSON()),"pages.json",EMAIL,msg));
   console.log("Commit to Github Successful!");
 }
