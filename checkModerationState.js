@@ -7,6 +7,9 @@
   * Check if it is in the deletion column
     * Prompt the moderator if they truly want to delete the club, and then delete the club.
 */
+function manualUpdate(){
+  githubAPI("Manually update website");
+}
 function destroyClub(moderationRow){
   moderation.deleteRow(moderationRow);
 }
@@ -16,11 +19,12 @@ function whenEdit(e) {
   if(as.getName() === "Moderation"){
     const cell = e.range;
     let columnIsApproval = e.range.columnStart === e.range.columnEnd && e.range.columnStart === APPROVAL_COLUMN;
-    let columnIsDeletion = e.range.columnStart === e.range.columnEnd && e.range.columnStart === DELETION_COLUMN;
+    //let columnIsDeletion = e.range.columnStart === e.range.columnEnd && e.range.columnStart === DELETION_COLUMN;
     let rowCorrect = e.range.rowStart === e.range.rowEnd && e.range.rowEnd > 2;
     let clubNameRow = e.range.rowStart;
 
     let clubName = as.getRange(clubNameRow,CLUB_NAME_COLUMN).getValue();
+    /*
     if(columnIsDeletion){
       var response = Browser.inputBox("Are you sure you want to delete the webpage of the club " + clubName + "? Type YES below to confirm");
       if(response.toLowerCase() === "yes" && clubName === as.getRange(clubNameRow,CLUB_NAME_COLUMN).getValue()){
@@ -31,10 +35,14 @@ function whenEdit(e) {
       } else{
         cell.setValue(false);
       }
-    }
+    }*/
     if(columnIsApproval){
       let approvalVal = as.getRange(clubNameRow,APPROVAL_COLUMN).getValue();
       switch(approvalVal){
+        case "Inactive":
+          githubAPI("Deactive club with name " + clubName);
+          //Keep sheet content but do not display the information
+        break;
         case "Needs Revision":
           //Send an automated email to "Editor's Email"
         break;

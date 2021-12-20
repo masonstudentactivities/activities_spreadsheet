@@ -30,7 +30,7 @@ function generateFormArguments(name){
 function newClubFormatting(modRowLoc){
   let NUMBER_OF_DASHBOARD_ITEMS = 8;
   let rule = SpreadsheetApp.newDataValidation()
-    .requireValueInList(["Needs Revision","Under Review","Approved"],true)
+    .requireValueInList(["Inactive","Needs Revision","Under Review","Approved"],true)
     .setAllowInvalid(false)
     .setHelpText('Please select an item from the dropdown')
     .build();
