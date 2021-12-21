@@ -59,7 +59,7 @@ GithubClient.prototype.commit = function(content, filename, email,msg) {
     //let gitAPIData = UrlFetchApp.fetch("https://api.github.com/repos/masonstudentactivities/masonstudentactivities.github.io/contents/thumbnails/" + fileName);
     
     let commitObj = {
-      "path": "thumbnails/" + fileName,
+      "path": "public/thumbnails/" + fileName,
       "mode": "100644",
       "type": "blob",
       "sha":gitBlob.sha
@@ -128,6 +128,6 @@ GithubClient.prototype.makeRequest = function(method, resource, data) {
 function githubAPI(msg){
   let client = new GithubClient(GIT_USER,REPO_NAME,GIT_USER)
   console.log("Committing to Github with message: " + msg);
-  console.log(client.commit(JSON.stringify(generatedApprovedJSON()),"pages.json",EMAIL,msg));
+  console.log(client.commit(JSON.stringify(generatedApprovedJSON()),"src/pages.json",EMAIL,msg));
   console.log("Commit to Github Successful!");
 }
