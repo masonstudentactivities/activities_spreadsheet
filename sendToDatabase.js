@@ -36,10 +36,7 @@ function newClubFormatting(modRowLoc){
     .build();
   //moderation.getRange(modRowLoc,5).setValue(generateEditLink());
   moderation.getRange(modRowLoc,6).setDataValidation(rule).setValue("Under Review");
-  let checkboxRule = SpreadsheetApp.newDataValidation()
-  .requireCheckbox()
-  .build();
-  moderation.getRange(modRowLoc,7).setDataValidation(checkboxRule).setValue(false);
+  
   moderation.getRange(modRowLoc,1,1,NUMBER_OF_DASHBOARD_ITEMS).setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
 }
 function formSubmissionToJSON(row){
@@ -82,6 +79,13 @@ function updateModerationContent(modRowLoc){
 function approveClub(row){
   let clubObj = getDatabaseJSON(row);
   clubObj.approved = clubObj.proposed;
+  
+  //Extract drive link and determine the file extension of the uploaded image
+  let fileID = clubObj.approved.thumbURL.split("?id=")[1];
+  let imageFile = DriveApp.getFileById(fileID);
+  let fileExtension = imageFile.getMimeType().split("/")[1]; //Convert image/png into png
+  clubObj.approved.fileExtension = fileExtension;
+
   clubObj.proposed = {};
   setDatabaseJSON(row,clubObj);
   updateModerationContent(row);
