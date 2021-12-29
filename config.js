@@ -15,8 +15,8 @@ var db = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Database");
 var moderation = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Moderation");
 
 /* -- FORM OBJECTS -- */
-var newclubform = FormApp.openById("15Yo6r4cUKBd8D_lKtbRC72Z1UuaWxVdEM1MpIkq0saI")
-var updateclubform = FormApp.openById("1Y18ojt8e38zIK2W5NrHDegZUsqp30gBEq1ETWNxuF5A")
+var newclubform = FormApp.openById(NEW_CLUB_FORM_ID);
+var updateclubform = FormApp.openById(UPDATE_CLUB_FORM_ID)
 
 
 /* -- RESPONSE SHEET CONSTANTS -- */
