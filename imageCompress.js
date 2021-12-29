@@ -3,32 +3,13 @@
   Created by Jessica Li
 */
 
-function compress_main(event) {
+function imageCompress(event) {
   Logger.log(`Using key ${TINYPNG_API_KEY} for TinyPNG API.` )
   Logger.log("Response to form received... Processing  response...")
-  var [tnID, opIDs] = eventProcess(event)
+  let tnID = eventProcess(event)
   Logger.log("Compressing thumbnail...")
   compressFile(tnID, TINYPNG_API_KEY)
   Logger.log("Successfully compressed thumbnail!")
-  Logger.log("Compressing optional images if necessary...")
-  if (opIDs.join("") == "falsefalsefalse"){
-    Logger.log("No optional images!")
-  }
-  else {
-    Logger.log(opIDs)
-  }
-  for (id in opIDs) {
-    if (opIDs[id]) {
-      Logger.log(`Optional file ${id} beginning compression...`)
-      if (imageSize(opIDs[id]) > 1) {
-        Logger.log(`Optional image larger than 1MB!`)
-        compressFile(opIDs[id], TINYPNG_API_KEY)
-      }
-      else {
-        Logger.log(`Optional file ${id} is too small: ${imageSize(opIDs[id])} MB`)
-      }
-    }
-  }
   Logger.log("Success!")
 }
 
@@ -39,15 +20,14 @@ function eventProcess(event) {
     Documentation: https://developers.google.com/apps-script/guides/triggers/events#form-submit
   */
   var tnID = event.namedValues["Upload a thumbnail"][0].split("=")[1]
-  var opIDs = [false, false, false]
-  for (i = 1; i <= 3; i++) {
+  /*for (i = 1; i <= 3; i++) {
     var link = event.namedValues[`Upload any other images you'd like on the website (Image ${i})`][0]
     if (link != "") {
       opIDs[i-1] = link.split("=")[1]
     }
-  }
-  Logger.log(`Thumbnail ID: ${tnID}; Optional IDs: ${opIDs}`)
-  return [tnID, opIDs]
+  }*/
+  Logger.log(`Thumbnail ID: ${tnID};`)
+  return tnID;
 }
 
 

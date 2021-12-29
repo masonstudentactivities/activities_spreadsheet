@@ -1,6 +1,7 @@
 function onFormSubmit(event) {
-  compress_main(event)
+  imageCompress(event)
   sendToDatabase(event)
+  //updateEditForm(event)
 }
 
 /* Original onFormSubmit(event) and helper functions
