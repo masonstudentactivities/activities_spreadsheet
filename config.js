@@ -2,8 +2,6 @@
   Spreadsheet Configuration Script
   Created by Luke Trenaman
   This is a useful list of constants that the project uses.
-  This is also where all of the API keys are contained.
-  If you want to update an API key, just change one of the variables below.
   If you're having any trouble with the Spreadsheet, feel free to email me at trenamanluke@gmail.com
 */
 
@@ -27,7 +25,7 @@ const NAME_COLUMN = 3;
 //This constant refers to the first row of the form responses that does not contain header information
 const FORM_ROW_START = 3;
 //This constant refers to the number of form questions. Set this to the number of text-filled columns in the "Form Responses" sheet
-const NUM_OUTPUTS = 7;
+const NUM_OUTPUTS = 23;
 
 
 /* -- DATABASE SHEET CONSTANTS -- */
