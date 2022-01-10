@@ -30,8 +30,7 @@ GithubClient.prototype.commit = function(content, filename, email,msg) {
   var lastTreeSha = lastCommit['tree']['sha'];
   // Create tree object (also implicitly creates a blob based on content)
   // See http://developer.github.com/v3/git/trees/
-  try{
-    console.log()
+  console.log()
   //generatedApprovedJSON()
   let spreadsheetCommitTree = [
     {path: filename,
@@ -74,10 +73,6 @@ GithubClient.prototype.commit = function(content, filename, email,msg) {
   var newContentTree = this.makeRequest("post", "trees",
                                          {base_tree: lastTreeSha,
                                          tree: spreadsheetCommitTree})
-  }
-  catch(e){
-    console.log(e)
-  }
   var newContentTreeSha = newContentTree["sha"];
   
   
