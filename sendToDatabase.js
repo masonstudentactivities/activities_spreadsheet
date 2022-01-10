@@ -21,7 +21,7 @@ function generateUrlArguments(obj){
       }
     return ret.join('&');
   }
-  return SITE_NAME + "/preview/index.html?" + encodeQueryData(obj);
+  return SITE_NAME + "/preview/?data=" + encodeURIComponent(JSONCrush.crush(JSON.stringify(obj)));
 }
 function generateFormArguments(name){
   return "This feature does not yet exist";
@@ -67,15 +67,31 @@ function updateModerationContent(modRowLoc){
   if(email !== undefined){
     moderation.getRange(modRowLoc,2).setValue(email);
   }
-  let proposedLink = proposed["timestamp"] === undefined ? "" : generateUrlArguments(proposed);
-  let approvedLink = approved["timestamp"] === undefined  ? "" :  generateUrlArguments(approved);
-  moderation.getRange(modRowLoc,MOD_PROPOSED_COLUMN).setValue(proposedLink);
-  moderation.getRange(modRowLoc,MOD_APPROVED_COLUMN).setValue(approvedLink);
+  let proposedLink = "";
+  if(proposed["timestamp"] !== undefined){
+    if(approved["timestamp"] !== undefined){
+      proposedLink = generateUrlArguments({"proposed":proposed,"approved":approved});
+    } else{
+      proposedLink = generateUrlArguments({"proposed":proposed});
+    }
+  }
+  let approvedLink = approved["timestamp"] === undefined  ? "" : generateUrlArguments({"approved":approved});
+  let richProposed = SpreadsheetApp.newRichTextValue()
+   .setText(proposedLink)
+   .setLinkUrl(proposedLink)
+   .build();
+   let richApproved = SpreadsheetApp.newRichTextValue()
+   .setText(approvedLink)
+   .setLinkUrl(approvedLink)
+   .build();
+  moderation.getRange(modRowLoc,MOD_PROPOSED_COLUMN).setRichTextValue(richProposed);
+  moderation.getRange(modRowLoc,MOD_APPROVED_COLUMN).setRichTextValue(richApproved);
   if(name !== undefined){
     moderation.getRange(modRowLoc,5).setValue(generateEditLink(name));
   }
   moderation.getRange(modRowLoc,6).setValue(proposedLink === "" && approvedLink !== "" ? "Approved" : "Under Review");
 }
+
 function approveClub(row){
   let clubObj = getDatabaseJSON(row);
   clubObj.approved = clubObj.proposed;
@@ -118,6 +134,7 @@ function sendToDatabase(e) {
       "proposed":encodedJSON,
       "approved":{}
     });
+    updateEditForm();
   } else{
     let currentJSON = getDatabaseJSON(s.modRowLoc);
     currentJSON.proposed = encodedJSON;
