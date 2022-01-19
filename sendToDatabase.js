@@ -32,7 +32,7 @@ function generateUrlArguments(obj){
       }
     return ret.join('&');
   }
-  return SITE_NAME + "/"+directory+"/preview/?data=" + encodeURIComponent(JSONCrush.crush(JSON.stringify(obj)));
+  return SITE_NAME + "/"+DIRECTORY+"/preview/?data=" + encodeURIComponent(JSONCrush.crush(JSON.stringify(obj)));
 }
 function generateFormArguments(name){
   return "This feature does not yet exist";

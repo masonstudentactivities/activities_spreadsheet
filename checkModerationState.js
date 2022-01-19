@@ -14,7 +14,7 @@ function destroyClub(moderationRow){
   moderation.deleteRow(moderationRow);
 }
 
-function runModeration(){
+function runModeration(e,as){
   const cell = e.range;
   let columnIsApproval = e.range.columnStart === e.range.columnEnd && e.range.columnStart === APPROVAL_COLUMN;
   //let columnIsDeletion = e.range.columnStart === e.range.columnEnd && e.range.columnStart === DELETION_COLUMN;
@@ -60,10 +60,10 @@ function whenEdit(e) {
   console.log(JSON.stringify(e));
   const as = e.source.getActiveSheet();
   if(as.getName() === "High School Moderation"){
-    runModeration();
+    runModeration(e,as);
   } else if(as.getName() === "Middle School Moderation"){
     setToMiddleSchool();
-    runModeration();
+    runModeration(e,as);
   } else{
     return;
   }

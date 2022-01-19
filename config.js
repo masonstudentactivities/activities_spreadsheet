@@ -16,7 +16,6 @@ var DIRECTORY = "mhs";
 
 /* -- FORM OBJECTS -- */
 var newclubform = FormApp.openById(NEW_CLUB_FORM_ID);
-var updateclubform = FormApp.openById(UPDATE_CLUB_FORM_ID)
 
 
 /* -- RESPONSE SHEET CONSTANTS -- */
