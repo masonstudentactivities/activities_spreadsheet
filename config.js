@@ -2,17 +2,22 @@
   Spreadsheet Configuration Script
   Created by Luke Trenaman
   This is a useful list of constants that the project uses.
-  This is also where all of the API keys are contained.
-  If you want to update an API key, just change one of the variables below.
   If you're having any trouble with the Spreadsheet, feel free to email me at trenamanluke@gmail.com
 */
 
 
 
 /* -- SPREADSHEET OBJECTS -- */
-var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Form Responses");
-var db = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Database");
-var moderation = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Moderation");
+var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("High School Form Responses");
+var moderation = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("High School Moderation");
+
+/* -- SITE DIRECTORY CONSTANTS -- */
+var DIRECTORY = "mhs";
+
+/* -- FORM OBJECTS -- */
+var newclubform = FormApp.openById(NEW_CLUB_FORM_ID);
+var updateclubform = FormApp.openById(UPDATE_CLUB_FORM_ID)
+
 
 /* -- RESPONSE SHEET CONSTANTS -- */
 //JSON header properties are in the second row
@@ -22,7 +27,7 @@ const NAME_COLUMN = 3;
 //This constant refers to the first row of the form responses that does not contain header information
 const FORM_ROW_START = 3;
 //This constant refers to the number of form questions. Set this to the number of text-filled columns in the "Form Responses" sheet
-const NUM_OUTPUTS = 7;
+const NUM_OUTPUTS = 23;
 
 
 /* -- DATABASE SHEET CONSTANTS -- */
@@ -40,5 +45,3 @@ const MOD_ROW_START = 3;
 const MOD_NAME_COLUMN = 1;
 const MOD_PROPOSED_COLUMN = 3;
 const MOD_APPROVED_COLUMN = 4;
-
-

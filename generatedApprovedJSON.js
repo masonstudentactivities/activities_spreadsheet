@@ -10,7 +10,7 @@ function generatedApprovedJSON() {
   let modRowLoc = MOD_ROW_START;
   while(moderation.getRange(modRowLoc,1).getValue() !== ""){
     dbJSON = getDatabaseJSON(modRowLoc);
-    if(dbJSON.approved !== undefined && moderation.getRange(modRowLoc,APPROVAL_COLUMN).getValue() !== "Inactive"){
+    if(Object.keys(dbJSON.approved).length > 0 && moderation.getRange(modRowLoc,APPROVAL_COLUMN).getValue() !== "Inactive"){
       sitesJSON.push(dbJSON.approved);
     }
     modRowLoc += 1;
