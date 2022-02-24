@@ -1,6 +1,6 @@
 function setToMiddleSchool(){
   sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Middle School Form Responses");
-  moderation = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Middle School Moderation");
+  moderation = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("2️⃣ Middle School Moderation");
   DIRECTORY = "mms";
   NEW_CLUB_FORM_ID = NEW_CLUB_FORM_ID_MMS;
 }

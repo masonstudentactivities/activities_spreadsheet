@@ -9,7 +9,7 @@
 
 /* -- SPREADSHEET OBJECTS -- */
 var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("High School Form Responses");
-var moderation = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("High School Moderation");
+var moderation = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("1️⃣ High School Moderation");
 
 /* -- SITE DIRECTORY CONSTANTS -- */
 var DIRECTORY = "mhs";
@@ -26,7 +26,7 @@ const NAME_COLUMN = 3;
 //This constant refers to the first row of the form responses that does not contain header information
 const FORM_ROW_START = 3;
 //This constant refers to the number of form questions. Set this to the number of text-filled columns in the "Form Responses" sheet
-const NUM_OUTPUTS = 23;
+const NUM_OUTPUTS = 22;
 
 
 /* -- DATABASE SHEET CONSTANTS -- */

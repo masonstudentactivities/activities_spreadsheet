@@ -100,6 +100,7 @@ GithubClient.prototype.commit = function(content, filename, email,msg) {
 Makes authenticated HTTP request to Github client.
 @param {string} method - HTTP method
 @param {string} email - Committer email
+@param {object} data - JSON upload
 @returns {string} URL of new commit
 */
 GithubClient.prototype.makeRequest = function(method, resource, data) {

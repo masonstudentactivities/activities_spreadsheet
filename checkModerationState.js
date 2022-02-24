@@ -7,8 +7,12 @@
   * Check if it is in the deletion column
     * Prompt the moderator if they truly want to delete the club, and then delete the club.
 */
-function manualUpdate(){
-  githubAPI("Manually update website");
+function manualUpdateMHS(){
+  githubAPI("Manually update website for high school");
+}
+function manualUpdateMMS(){
+  setToMiddleSchool();
+  githubAPI("Manually update website for middle school");
 }
 function destroyClub(moderationRow){
   moderation.deleteRow(moderationRow);
@@ -42,6 +46,13 @@ function runModeration(e,as){
         //Keep sheet content but do not display the information
       break;
       case "Needs Revision":
+        let data = getDatabaseJSON(clubNameRow);
+        let feedback = Browser.inputBox(`Sending email to editor ${data.email} -> Your club proposal has been provided with the following feedback:`);
+        MailApp.sendEmail({
+          to: data.email,
+          subject: `Your club ${clubName} has been marked as Needs Revision.`,
+          htmlBody: "Your club proposal has been provided with the following feedback:<br/>" + feedback
+        });
         //Send an automated email to "Editor's Email"
       break;
       case "Under Review":
@@ -59,12 +70,19 @@ function runModeration(e,as){
 function whenEdit(e) {
   console.log(JSON.stringify(e));
   const as = e.source.getActiveSheet();
-  if(as.getName() === "High School Moderation"){
+  if(as.getName() === "1️⃣ High School Moderation"){
     runModeration(e,as);
-  } else if(as.getName() === "Middle School Moderation"){
+  } else if(as.getName() === "2️⃣ Middle School Moderation"){
     setToMiddleSchool();
     runModeration(e,as);
   } else{
     return;
   }
+}
+function testEmail(){
+          MailApp.sendEmail({
+          to: "luke.trenaman30@masonohioschools.com",
+          subject: `Your club has been marked as Needs Revision.`,
+          htmlBody: "Your club proposal has been provided with the following feedback:<br/> feeback"
+        });
 }
