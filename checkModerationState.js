@@ -62,7 +62,6 @@ function runModeration(e, activeSheet) {
 }
 
 function whenEdit(e) {
-  console.log(JSON.stringify(e));
   const activeSheet = e.source.getActiveSheet();
   if (activeSheet.getName() === "1️⃣ High School Moderation") {
     runModeration(e, activeSheet);

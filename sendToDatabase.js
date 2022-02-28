@@ -133,7 +133,6 @@ function seekClub(name){
 
 //On form submit, send the submitted data to a row in the sheet
 function sendToDatabase(e) {
-  console.log(generateEditLink(e));
   let row = e.range.rowStart;
   let encodedJSON = formSubmissionToJSON(row);
   let name = encodedJSON.name;
