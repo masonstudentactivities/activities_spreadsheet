@@ -10,6 +10,7 @@ function generatedApprovedJSON() {
   let modRowLoc = MOD_ROW_START;
   while(moderation.getRange(modRowLoc,1).getValue() !== ""){
     dbJSON = getDatabaseJSON(modRowLoc);
+    //Pull all data from clubs that have some approved content and haven't been deactivated
     if(Object.keys(dbJSON.approved).length > 0 && moderation.getRange(modRowLoc,APPROVAL_COLUMN).getValue() !== "Inactive"){
       sitesJSON.push(dbJSON.approved);
     }

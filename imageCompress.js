@@ -20,12 +20,6 @@ function eventProcess(event) {
     Documentation: https://developers.google.com/apps-script/guides/triggers/events#form-submit
   */
   var tnID = event.namedValues["Upload a thumbnail"][0].split("=")[1]
-  /*for (i = 1; i <= 3; i++) {
-    var link = event.namedValues[`Upload any other images you'd like on the website (Image ${i})`][0]
-    if (link != "") {
-      opIDs[i-1] = link.split("=")[1]
-    }
-  }*/
   Logger.log(`Thumbnail ID: ${tnID};`)
   return tnID;
 }

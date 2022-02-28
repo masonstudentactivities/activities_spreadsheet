@@ -44,3 +44,6 @@ const MOD_ROW_START = 3;
 const MOD_NAME_COLUMN = 1;
 const MOD_PROPOSED_COLUMN = 3;
 const MOD_APPROVED_COLUMN = 4;
+
+// Number of items in the moderation sheet that need to be formatted
+const NUMBER_OF_DASHBOARD_ITEMS = 7;
