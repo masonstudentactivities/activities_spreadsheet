@@ -47,11 +47,13 @@ function runModeration(e,as){
       break;
       case "Needs Revision":
         let data = getDatabaseJSON(clubNameRow);
+        let editLink = moderation.getRange(clubNameRow,5).getValue();
         let feedback = Browser.inputBox(`Sending email to editor ${data.email} -> Your club proposal has been provided with the following feedback:`);
         MailApp.sendEmail({
           to: data.email,
           subject: `Your club ${clubName} has been marked as Needs Revision.`,
-          htmlBody: "Your club proposal has been provided with the following feedback:<br/>" + feedback
+          htmlBody: "Your club proposal has been provided with the following feedback:<br/>" + feedback +"<br/> You're able to edit your club with this link:" +
+          `<a href="${editLink}">${editLink}</a>`
         });
         //Send an automated email to "Editor's Email"
       break;
